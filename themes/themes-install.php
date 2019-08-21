@@ -25,7 +25,7 @@
     (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-$version = "v1.0b1";														// extension version
+$version = "v1.0b3";														// extension version
 $appName = "Themes";
 $configName = strtolower($appName);
 
@@ -70,8 +70,6 @@ $configuration['version'] = exec("cat {$install_dir}/version.txt");
 $configuration['rootfolder'] = $install_dir;
 $configuration['postinit'] = "/usr/local/bin/php-cgi -f {$install_dir}/{$configName}-start.php";
 $configuration['shutdown'] = "/usr/local/bin/php-cgi -f {$install_dir}/{$configName}-stop.php";
-$configuration['configPath'] = !empty($configuration['configPath']) ? $configuration['configPath'] : "{$configuration['rootfolder']}/themes.conf";
-exec("touch {$configuration['configPath']}");
 
 // remove start/stop commands and existing old rc format entries
 ext_remove_rc_commands($configName);
@@ -80,8 +78,8 @@ $configuration['rc_uuid_stop'] = $configuration['shutdown'];
 ext_create_rc_commands($appName, $configuration['rc_uuid_start'], $configuration['rc_uuid_stop']);
 ext_save_config($configFile, $configuration);
 
-if ($new_installation) {
+#if ($new_installation) {
 	echo "\nInstallation completed, use WebGUI | Extensions | {$appName} to configure the application!\n";
-}
+#}
 require_once("{$configuration['rootfolder']}/{$configName}-start.php");					// initialize extension
 ?>

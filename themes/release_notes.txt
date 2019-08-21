@@ -1,5 +1,5 @@
 ﻿Version Date        Description
-1.0b1   2019.08.17  initial release
+1.0b4   2019.08.21  initial release
 
 N: ...  new feature
 C: ...  changes

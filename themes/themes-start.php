@@ -37,11 +37,6 @@ if (($configuration = ext_load_config($configFile)) === false) {
     exit;
 }
 
-unlink_if_exists("/usr/local/share/locale-{$configName}");
-unlink_if_exists("/usr/local/www/{$configName}-config.php");
-unlink_if_exists("/usr/local/www/{$configName}-update_extension.php");
-unlink_if_exists("/usr/local/www/ext/{$configName}");
-
 $return_val = 0;
 // create links to extension files
 $return_val += mwexec("ln -sf {$rootfolder}/locale-{$configName} /usr/local/share/", true);
@@ -71,14 +66,14 @@ if (!file_exists("/usr/local/www/css.php-ORIGINAL")) {
 
 # create .css.php script
 			$setCssPhpScript = "{$configuration['rootfolder']}/base/setCssPhpScript.sh";
-			$timeStamp = time();
-$timeStamp = '<?php echo time();?>';
+			$timeStamp = '<?php echo time();?>';
 			$script = fopen($setCssPhpScript, "w");
 			fwrite($script,
 "#!/bin/sh
 # WARNING: THIS IS AN AUTOMATICALLY CREATED SCRIPT, DO NOT CHANGE THE CONTENT!
 sed -i '' 's/.css.php/.css?t={$timeStamp}/g' /usr/local/www/fbegin.inc
 sed -i '' 's/.css.php/.css?t={$timeStamp}/g' /usr/local/www/filechooser.php
+sync
 ");
 			fclose($script);
 			chmod($setCssPhpScript, 0755);
@@ -88,8 +83,9 @@ if ($return_val == 0) {
 	if ($configuration['enable']) {
 		mwexec("cp {$configuration['rootfolder']}/live/css/* /usr/local/www/css/", true);
 		mwexec("cp {$configuration['rootfolder']}/base/images/{$configuration['themes'][$configuration['currentTheme']]['themeImages']}/* /usr/local/www/images/", true);
+		flush();
 	} 
-	exec("logger {$configName}-extension: started");
+	exec("logger {$configName}-extension: started successfully");
 }
 else exec("logger {$configName}-extension: error(s) during startup, failed with return value = {$return_val}");
 ?>

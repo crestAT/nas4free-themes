@@ -162,12 +162,13 @@ sed -i '' 's/#tbTEXTCOLOR/{$configuration['themes'][$configuration['currentTheme
 sed -i '' 's/#tbBUTTONFACE/{$configuration['themes'][$configuration['currentTheme']]['tbBUTTONFACE']}/g' {$configuration['rootfolder']}/live/css/*.css
 sed -i '' 's/#tbBACKGROUND/{$configuration['themes'][$configuration['currentTheme']]['tbBACKGROUND']}/g' {$configuration['rootfolder']}/live/css/*.css
 sed -i '' 's/#tbFRAME/{$configuration['themes'][$configuration['currentTheme']]['tbFRAME']}/g' {$configuration['rootfolder']}/live/css/*.css
+sync
 ");
 			fclose($script);
 			chmod($setThemeScript, 0755);
 			mwexec($setThemeScript, true);
-			mwexec("cp {$configuration['rootfolder']}/live/css/* /usr/local/www/css/", true);
-			mwexec("cp {$configuration['rootfolder']}/base/images/{$configuration['themes'][$configuration['currentTheme']]['themeImages']}/* /usr/local/www/images/", true);
+			require_once("{$configuration['rootfolder']}/{$configName}-start.php");
+			flush();
 		} else {
 			mwexec("cp /usr/local/www/css-ORIGINAL/* /usr/local/www/css/", true);
 			mwexec("cp /usr/local/www/images-ORIGINAL/* /usr/local/www/images/", true);
@@ -197,7 +198,7 @@ bindtextdomain($domain, $localeExtDirectory);
 <style>
 input[type="color"] {
     height: 15px;
-    margin-left: 2px;
+    margin-left: 3px;
     vertical-align: inherit;		
 }
 </style>
