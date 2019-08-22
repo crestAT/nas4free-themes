@@ -25,7 +25,7 @@
     (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-$version = "v1.0b3";														// extension version
+$version = "v1.0";														// extension version
 $appName = "Themes";
 $configName = strtolower($appName);
 

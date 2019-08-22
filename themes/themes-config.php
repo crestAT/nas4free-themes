@@ -199,7 +199,13 @@ bindtextdomain($domain, $localeExtDirectory);
 input[type="color"] {
     height: 15px;
     margin-left: 3px;
-    vertical-align: inherit;		
+    padding: 1px 2px;
+    vertical-align: top;		
+}
+@-moz-document url-prefix() {
+	input[type="color"] {
+	    height: 20px;
+	}
 }
 </style>
 <script type="text/javascript">
@@ -267,23 +273,23 @@ $(document).ready(function(){
 			<table width="100%" border="0" cellpadding="6" cellspacing="0">
 	            <?php
 					html_titleline(gettext("Theme Designer"));
-					html_combobox("selectedTheme", gettext("Theme"), "", $themesEditArray, gettext("Choose a theme"), true, false);
-					html_inputbox("themeName",gettext("Theme Name"),"",gettext("Enter/modify theme name"),true);
+					html_combobox("selectedTheme", gettext("Theme"), "", $themesEditArray, gettext("Choose a theme to modify"), true, false);
+					html_inputbox("themeName",gettext("Theme Name"),"",gettext("Enter new or modify theme name"),true);
 					html_colorchooser("tbMAINCOLOR",gettext("Navigation Main Color"),"",gettext("Menu/Footer/Tabs/Bars background color"),true);
 					html_colorchooser("tbNAVTEXT",gettext("Navigation Text"),"",gettext("Menu/Footer/Tabs/Bars text color"),true);
-					html_colorchooser("tbNAVSELECT",gettext("Navigation Selected Text"),"",gettext("Menu/Footer/Tabs/Bars selected text color"),true);
+					html_colorchooser("tbNAVSELECT",gettext("Navigation Selected Text"),"",gettext("Menu/Tabs/Bars selected text color"),true);
 					html_colorchooser("tbPAGETITLE",gettext("Page Titel"),"",gettext("Page Titel text color"),true);
 					html_colorchooser("tbBACKGROUND",gettext("Page Background"),"",gettext("Standard background color"),true);
 					html_colorchooser("tbTEXTCOLOR",gettext("Page Text"),"",gettext("Standard text color"),true);
-					html_colorchooser("tbFRAME",gettext("Frames"),"",gettext("Frame color"),true);
+					html_colorchooser("tbFRAME",gettext("Frames"),"",gettext("Page frame color"),true);
 					html_colorchooser("tbBUTTONFACE",gettext("Buttons"),"",gettext("Button color"),true);
-					html_combobox("themeImages", gettext("Device Size Bar"), "", $themesImagesArray, gettext("Choose a bar type"), true, false);
+					html_combobox("themeImages", gettext("Device Size Bars"), "", $themesImagesArray, gettext("Choose a bar type to use for Status > System and Swap Devices"), true, false);
 				?>
 			</table>
 	        <div id="remarks">
 				<?php html_remark("note", gettext("Note"),
 					sprintf(gettext("For color definitions one can use hexadecimal color values (format: #rrggbb, eg #FFFFFF) or color names (eg white or lightgray) 
-					in the input fields or the HTML5 color pickers near by the input fields.<br />Please be aware that the color pickers can reflect only hexadecimal 
+					in the input fields or the color pickers.<br />Please be aware that the color pickers can reflect only hexadecimal 
 					colors but not color names!<br />For color names and further information please check the documentation at %s.")."</a>.", 
 					"<a href='https://www.w3schools.com/colors/colors_names.asp' target='_blank'>w3schools.com")); ?>
 	        </div>
