@@ -78,8 +78,8 @@ $configuration['rc_uuid_stop'] = $configuration['shutdown'];
 ext_create_rc_commands($appName, $configuration['rc_uuid_start'], $configuration['rc_uuid_stop']);
 ext_save_config($configFile, $configuration);
 
-#if ($new_installation) {
+if ($new_installation) {
 	echo "\nInstallation completed, use WebGUI | Extensions | {$appName} to configure the application!\n";
-#}
+}
 require_once("{$configuration['rootfolder']}/{$configName}-start.php");					// initialize extension
 ?>
