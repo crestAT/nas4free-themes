@@ -73,7 +73,17 @@ if (isset($_POST['ext_update']) && $_POST['ext_update']) {
 // download installer & install
     $return_val = mwexec("fetch -vo {$configuration['rootfolder']}/{$configName}-install.php 'https://raw.github.com/crestAT/nas4free-{$configName}/master/{$configName}/{$configName}-install.php'", false);
     if ($return_val == 0) {
-        require_once("{$configuration['rootfolder']}/{$configName}-install.php"); 
+    	/* special treatment for defined configs in new version */
+    	$replacement = $configuration;                                            	// save config for later use
+        
+		require_once("{$configuration['rootfolder']}/{$configName}-install.php");
+		
+    	/* special treatment for defined configs in new version */
+    	$configuration['enable'] = $replacement['enable'];
+    	$configuration['currentTheme'] = $replacement['currentTheme'];
+		array_replace_recursive($configuration['themes'], $replacement['themes']);	// restore modifications and user defined themes
+		ext_save_config($configFile, $configuration);
+
         $version = exec("cat {$configuration['rootfolder']}/version.txt");
         $savemsg = sprintf(gettext("Update to version %s completed!"), $version);
         header("Refresh:8");;

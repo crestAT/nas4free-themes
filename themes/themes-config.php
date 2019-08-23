@@ -259,7 +259,7 @@ $(document).ready(function(){
 	            <?php 
 	            	html_titleline_checkbox("enable", gettext("Themes"), $configuration['enable'], gettext("Enable"), "enable_change(false)");
 	            	html_text("installation_directory", gettext("Installation Directory"), sprintf(gettext("The extension is installed in %s"), $configuration['rootfolder']));
-					html_combobox("currentTheme", gettext("Theme"), $configuration['currentTheme'], $themesArray, sprintf(gettext("Choose a theme and hit %s to activate it"), gettext("Save")), true, false);
+					html_combobox("currentTheme", gettext("Theme"), $configuration['currentTheme'], $themesArray, sprintf(gettext("Choose a theme and press %s to activate"), gettext("Save")), true, false);
 				?>
 			</table>
 	        <div id="submit">
