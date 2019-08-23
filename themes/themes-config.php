@@ -273,7 +273,7 @@ $(document).ready(function(){
 			<table width="100%" border="0" cellpadding="6" cellspacing="0">
 	            <?php
 					html_titleline(gettext("Theme Designer"));
-					html_combobox("selectedTheme", gettext("Theme"), "", $themesEditArray, gettext("Choose a theme to modify"), true, false);
+					html_combobox("selectedTheme", gettext("Theme"), "", $themesEditArray, gettext("Choose a theme to modify or remove"), true, false);
 					html_inputbox("themeName",gettext("Theme Name"),"",gettext("Enter new or modify theme name"),true);
 					html_colorchooser("tbMAINCOLOR",gettext("Navigation Main Color"),"",gettext("Menu/Footer/Tabs/Bars background color"),true);
 					html_colorchooser("tbNAVTEXT",gettext("Navigation Text"),"",gettext("Menu/Footer/Tabs/Bars text color"),true);

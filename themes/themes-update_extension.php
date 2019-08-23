@@ -82,10 +82,10 @@ if (isset($_POST['ext_update']) && $_POST['ext_update']) {
     	$configuration['enable'] = $replacement['enable'];
     	$configuration['currentTheme'] = $replacement['currentTheme'];
 		$configuration['themes'] = array_replace_recursive($configuration['themes'], $replacement['themes']);
-		ext_save_config($configFile, $configuration);
+		$savemsg = get_std_save_message(ext_save_config($configFile, $configuration))."<br />";
 
         $version = exec("cat {$configuration['rootfolder']}/version.txt");
-        $savemsg = sprintf(gettext("Update to version %s completed!"), $version);
+        $savemsg .= sprintf(gettext("Update to version %s completed!"), $version);
         header("Refresh:8");;
     }
     else { $input_errors[] = sprintf(gettext("Download of installation file %s failed, installation aborted!"), "{$configName}-install.php"); }
