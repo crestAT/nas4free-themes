@@ -44,9 +44,9 @@
 	align-items: stretch;
 	padding: 0;
 	position: absolute;
-	background: #tbBACKGROUND;
+	background: #tbDDBACKGROUND;
 	opacity: 1.0;
-	border: 0.091em solid #tbMAINCOLOR;
+	border: 0.091em solid #tbDDBORDER;
 	font-size: 1em;
 	font-weight: normal;
 	min-width: 14em;
@@ -66,7 +66,7 @@
 	white-space: nowrap;
 	text-align: left;
 	text-decoration: none;
-	color: #tbTEXTCOLOR;
+	color: #tbDDTEXTCOLOR;
 }
 #navhdr > ul {
 	display: flex;
@@ -103,10 +103,12 @@
 #navhdr > ul > li:hover > ul,
 #navhdr > ul > li:focus > ul {
 	display: flex;
-	background: #tbBACKGROUND;
+	background: #tbDDBACKGROUND;
+	/* background: #tbMAINCOLOR; */
 }
 #navhdr > ul > li:hover > a,
 #navhdr ul ul li a:hover {
 	color: #tbNAVSELECT;
-	background: #tbMAINCOLOR;
+	background: #tbDDMAINCOLOR;
+	/* background: #tbBACKGROUND; */
 }

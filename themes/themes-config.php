@@ -55,6 +55,9 @@ if (!isset($configuration) || !is_array($configuration)) $configuration = array(
 
 // initialize variables --------------------------------------------------
 $setThemeScript = "{$configuration['rootfolder']}/base/setTheme.sh";
+$dropdownSchemeArray = array("Standard" => gettext("Standard"), "Inverted" => gettext("Inverted"));
+$homeIcon = "/images/home.png";
+$homeIconArray = array("White" => gettext("White"), "Black" => gettext("Black"));
 // -----------------------------------------------------------------------
 
 // -----------------------------------------------------------------------
@@ -124,6 +127,8 @@ if ($_POST) {
 			$configuration['themes'][$themeName]['tbTEXTCOLOR'] = trim($_POST['tbTEXTCOLOR']);
 			$configuration['themes'][$themeName]['tbFRAME'] = trim($_POST['tbFRAME']);
 			$configuration['themes'][$themeName]['tbBUTTONFACE'] = trim($_POST['tbBUTTONFACE']);
+			$configuration['themes'][$themeName]['dropdownScheme'] = $_POST['dropdownScheme'];
+			$configuration['themes'][$themeName]['homeIcon'] = $_POST['homeIcon'];
 			$configuration['themes'][$themeName]['themeImages'] = $_POST['themeImages'];
 			ext_save_config($configFile, $configuration);
 			$savemsg .= sprintf(gettext("The theme '%s' has been saved"), $_POST['themeName'])."<br />";
@@ -148,7 +153,19 @@ if ($_POST) {
         $configuration['currentTheme'] = $_POST['currentTheme'];
 		$savemsg .= get_std_save_message(ext_save_config($configFile, $configuration))."<br />";
         if (isset($_POST['enable'])) {
-# create convert script
+			// handle dropdown scheme
+			if ($configuration['themes'][$configuration['currentTheme']]['dropdownScheme'] == "Standard") {
+				$tbDDMAINCOLOR = $configuration['themes'][$configuration['currentTheme']]['tbMAINCOLOR'];
+				$tbDDBACKGROUND = $configuration['themes'][$configuration['currentTheme']]['tbBACKGROUND'];
+				$tbDDBORDER = $configuration['themes'][$configuration['currentTheme']]['tbMAINCOLOR'];
+				$tbDDTEXTCOLOR = $configuration['themes'][$configuration['currentTheme']]['tbTEXTCOLOR'];
+			} else {
+				$tbDDMAINCOLOR = $configuration['themes'][$configuration['currentTheme']]['tbBACKGROUND'];
+				$tbDDBACKGROUND = $configuration['themes'][$configuration['currentTheme']]['tbMAINCOLOR'];
+				$tbDDBORDER = $configuration['themes'][$configuration['currentTheme']]['tbFRAME'];
+				$tbDDTEXTCOLOR = $configuration['themes'][$configuration['currentTheme']]['tbNAVTEXT'];
+			}
+			// create convert script
 			$script = fopen($setThemeScript, "w");
 			fwrite($script,
 "#!/bin/sh
@@ -162,6 +179,11 @@ sed -i '' 's/#tbTEXTCOLOR/{$configuration['themes'][$configuration['currentTheme
 sed -i '' 's/#tbBUTTONFACE/{$configuration['themes'][$configuration['currentTheme']]['tbBUTTONFACE']}/g' {$configuration['rootfolder']}/live/css/*.css
 sed -i '' 's/#tbBACKGROUND/{$configuration['themes'][$configuration['currentTheme']]['tbBACKGROUND']}/g' {$configuration['rootfolder']}/live/css/*.css
 sed -i '' 's/#tbFRAME/{$configuration['themes'][$configuration['currentTheme']]['tbFRAME']}/g' {$configuration['rootfolder']}/live/css/*.css
+# Navbar dropdown definitions
+sed -i '' 's/#tbDDMAINCOLOR/{$tbDDMAINCOLOR}/g' {$configuration['rootfolder']}/live/css/*.css
+sed -i '' 's/#tbDDBACKGROUND/{$tbDDBACKGROUND}/g' {$configuration['rootfolder']}/live/css/*.css
+sed -i '' 's/#tbDDBORDER/{$tbDDBORDER}/g' {$configuration['rootfolder']}/live/css/*.css
+sed -i '' 's/#tbDDTEXTCOLOR/{$tbDDTEXTCOLOR}/g' {$configuration['rootfolder']}/live/css/*.css
 sync
 ");
 			fclose($script);
@@ -169,11 +191,13 @@ sync
 			mwexec($setThemeScript, true);
 			require_once("{$configuration['rootfolder']}/{$configName}-start.php");
 			flush();
+			$homeIcon = "/images/home-{$configuration['themes'][$configuration['currentTheme']]['homeIcon']}.png";
 		} else {
 			mwexec("cp /usr/local/www/css-ORIGINAL/* /usr/local/www/css/", true);
 			mwexec("cp /usr/local/www/images-ORIGINAL/* /usr/local/www/images/", true);
 			mwexec("cp /usr/local/www/css.php-ORIGINAL/fbegin.inc /usr/local/www/fbegin.inc", true);
 			mwexec("cp /usr/local/www/css.php-ORIGINAL/filechooser.php /usr/local/www/filechooser.php", true);
+			$homeIcon = "/images/home.png";
 		} 
 	}
 }
@@ -216,6 +240,9 @@ function enable_change(enable_change) {
 }
 
 $(document).ready(function(){
+	homeIcon = '<?php echo $homeIcon; ?>'; 
+	$('#navhdr > ul > li > a > img').attr('src',homeIcon);
+
 	$('input[type=color]').on('change', function() {					// set input with selected color
 		var color = $(this).val();
 		$(this).prev().val(color);
@@ -238,7 +265,6 @@ $(document).ready(function(){
 		   $('#' + key + 'colorbtn').val(theme[key]);					// color button values
 		}
 	});
-	
 });
 //-->
 </script>
@@ -283,6 +309,8 @@ $(document).ready(function(){
 					html_colorchooser("tbTEXTCOLOR",gettext("Page Text"),"",gettext("Standard text color"),true);
 					html_colorchooser("tbFRAME",gettext("Frames"),"",gettext("Page frame color"),true);
 					html_colorchooser("tbBUTTONFACE",gettext("Buttons"),"",gettext("Button color"),true);
+					html_combobox("dropdownScheme", gettext("Dropdown Color Scheme"), "", $dropdownSchemeArray, gettext("Color scheme for navigation dropdowns"), true, false);
+					html_combobox("homeIcon", gettext("Home Icon"), "", $homeIconArray, gettext("Navigation bar home icon color, standard is white"), true, false);
 					html_combobox("themeImages", gettext("Device Size Bars"), "", $themesImagesArray, gettext("Choose a bar type to use for Status > System and Swap Devices"), true, false);
 				?>
 			</table>

@@ -83,6 +83,8 @@ if ($return_val == 0) {
 	if ($configuration['enable']) {
 		mwexec("cp {$configuration['rootfolder']}/live/css/* /usr/local/www/css/", true);
 		mwexec("cp {$configuration['rootfolder']}/base/images/{$configuration['themes'][$configuration['currentTheme']]['themeImages']}/* /usr/local/www/images/", true);
+		mwexec("cp {$configuration['rootfolder']}/base/images/home-*.png /usr/local/www/images/", true);
+		mwexec("cp {$configuration['rootfolder']}/base/images/home-{$configuration['themes'][$configuration['currentTheme']]['homeIcon']}.png /usr/local/www/images/home.png", true);
 		flush();
 	} 
 	exec("logger {$configName}-extension: started successfully");
