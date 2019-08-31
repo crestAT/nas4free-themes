@@ -39,9 +39,11 @@ mwexec("cp /usr/local/www/css-ORIGINAL/* /usr/local/www/css/", true);
 mwexec("cp /usr/local/www/images-ORIGINAL/* /usr/local/www/images/", true);
 mwexec("cp /usr/local/www/css.php-ORIGINAL/fbegin.inc /usr/local/www/fbegin.inc", true);
 mwexec("cp /usr/local/www/css.php-ORIGINAL/filechooser.php /usr/local/www/filechooser.php", true);
+mwexec("cp /usr/local/www/js/spinner.js-ORIGINAL /usr/local/www/js/spinner.js", true);
 mwexec("rm -R /usr/local/www/css-ORIGINAL");
 mwexec("rm -R /usr/local/www/images-ORIGINAL");
 mwexec("rm -R /usr/local/www/css.php-ORIGINAL");
+mwexec("rm /usr/local/www/js/spinner.js-ORIGINAL");
 
 exec("logger {$configName}-extension: stopped"); 
 ?>

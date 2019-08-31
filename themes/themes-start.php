@@ -57,12 +57,21 @@ if (!file_exists("/usr/local/www/css-ORIGINAL")) {
 if (!file_exists("/usr/local/www/images-ORIGINAL")) {
 	mkdir("/usr/local/www/images-ORIGINAL");
 	mwexec("cp /usr/local/www/images/*.gif /usr/local/www/images-ORIGINAL/", true);
+	mwexec("cp /usr/local/www/images/home.png /usr/local/www/images-ORIGINAL/", true);
 }
 if (!file_exists("/usr/local/www/css.php-ORIGINAL")) {
 	mkdir("/usr/local/www/css.php-ORIGINAL");
 	mwexec("cp /usr/local/www/fbegin.inc /usr/local/www/css.php-ORIGINAL/", true);
 	mwexec("cp /usr/local/www/filechooser.php /usr/local/www/css.php-ORIGINAL/", true);
 }
+
+if (!file_exists("/usr/local/www/js/spinner.js-ORIGINAL")) {
+	mwexec("cp /usr/local/www/js/spinner.js /usr/local/www/js/spinner.js-ORIGINAL", true);
+}
+
+# needed to patch sucessfully
+mwexec("cp /usr/local/www/css.php-ORIGINAL/fbegin.inc /usr/local/www/", true);			
+mwexec("cp /usr/local/www/js/spinner.js-ORIGINAL /usr/local/www/js/spinner.js", true);
 
 # create .css.php script
 			$setCssPhpScript = "{$configuration['rootfolder']}/base/setCssPhpScript.sh";
@@ -72,7 +81,11 @@ if (!file_exists("/usr/local/www/css.php-ORIGINAL")) {
 "#!/bin/sh
 # WARNING: THIS IS AN AUTOMATICALLY CREATED SCRIPT, DO NOT CHANGE THE CONTENT!
 sed -i '' 's/.css.php/.css?t={$timeStamp}/g' /usr/local/www/fbegin.inc
+sed -i '' 's/spinner.js/spinner.js?t={$timeStamp}/g' /usr/local/www/fbegin.inc
 sed -i '' 's/.css.php/.css?t={$timeStamp}/g' /usr/local/www/filechooser.php
+# Spinner
+sed -i '' 's/#4D4D4D/{$configuration['themes'][$configuration['currentTheme']]['tbBUTTONFACE']}/g' /usr/local/www/js/spinner.js
+sed -i '' 's/white/{$configuration['themes'][$configuration['currentTheme']]['tbBACKGROUND']}/g' /usr/local/www/fbegin.inc
 sync
 ");
 			fclose($script);

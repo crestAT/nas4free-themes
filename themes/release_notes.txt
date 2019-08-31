@@ -1,4 +1,6 @@
 ﻿Version Date        Description
+1.1	2019.08.30  C: improvements for dark themes, adapted activity spinner according to background color to prevent flickering on page loading
+
 1.0	2019.08.25  initial release
 
 N: ...  new feature

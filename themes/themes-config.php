@@ -191,12 +191,14 @@ sync
 			mwexec($setThemeScript, true);
 			require_once("{$configuration['rootfolder']}/{$configName}-start.php");
 			flush();
+sleep(3);
 			$homeIcon = "/images/home-{$configuration['themes'][$configuration['currentTheme']]['homeIcon']}.png";
 		} else {
 			mwexec("cp /usr/local/www/css-ORIGINAL/* /usr/local/www/css/", true);
 			mwexec("cp /usr/local/www/images-ORIGINAL/* /usr/local/www/images/", true);
 			mwexec("cp /usr/local/www/css.php-ORIGINAL/fbegin.inc /usr/local/www/fbegin.inc", true);
 			mwexec("cp /usr/local/www/css.php-ORIGINAL/filechooser.php /usr/local/www/filechooser.php", true);
+			mwexec("cp /usr/local/www/js/spinner.js-ORIGINAL /usr/local/www/js/spinner.js", true);
 			$homeIcon = "/images/home.png";
 		} 
 	}
@@ -208,8 +210,8 @@ foreach($arrayKeys as $key) $themesArray[$key] = $key;					// create associative
 asort($themesArray);
 $themesEditArray = array_merge(array('' => ''), $themesArray);			// create array with blank option 0 for designer
 
-foreach (glob("{$configuration['rootfolder']}/base/images/*") as $dirName) {
-    $themesImagesArray[basename($dirName)] = basename($dirName);
+foreach (glob("{$configuration['rootfolder']}/base/images/*") as $dirName) {	// get themes images from directory names
+    if (is_dir($dirName)) $themesImagesArray[basename($dirName)] = basename($dirName);
 }
 
 // version checks for extension - just once per day
